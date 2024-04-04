@@ -377,3 +377,5 @@ compile_commands.json
 /qodana.yaml
 /otpfly.of
 /test/
+/otpfly
+/deployment/

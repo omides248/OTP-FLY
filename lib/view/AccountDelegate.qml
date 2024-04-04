@@ -12,12 +12,8 @@ ItemDelegate {
     width: parent ? parent.width : 0
     checkable: true
 
-    // onClicked: ListView.view.currentIndex = index
     property var code_expire: ""
-    // property bool enable: true
     property var expire: 0
-
-
 
 
     MouseArea {
@@ -47,16 +43,6 @@ ItemDelegate {
             let code_expire = accountBridge.update_expire_time(index)
             codeLabel.text = code_expire.split("-")[0]
             expire = code_expire.split("-")[1]
-
-            // timeoutLabel.text = code_expire.split("-")[1]
-            // toast.text = qsTr(String(model.name))
-            // toast.visible = true
-            // toast.text = qsTr(String(expire))
-            // toast.visible = true
-            // timeoutLabel.text = bridge.get_timeout("asdsa")
-            // codeLabel.text = bridge.get_cccc("asdsa")
-
-            // timeoutLabel.text = parseInt(timeoutLabel.text) + 1
         }
     }
 
@@ -89,12 +75,6 @@ ItemDelegate {
             Item {
                 Layout.fillWidth: true
             }
-            // Label {
-            //     id: timeoutLabel
-            //     font.pixelSize: Qt.application.font.pixelSize * 1.5
-            //     text: model.timeout
-            //     color: "red"
-            // }
 
             ProgressCircle {
                 size: 23
@@ -105,7 +85,6 @@ ItemDelegate {
                 arcBegin: 0
                 arcEnd: expire
                 lineWidth: 10
-
             }
         }
     }

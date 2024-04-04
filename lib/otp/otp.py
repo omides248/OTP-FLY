@@ -21,5 +21,6 @@ class OTP:
         return opt.now()
 
     @classmethod
-    def get_expire(cls, otp: any) -> int:
-        return int(otp.interval - datetime.now().timestamp() % otp.interval)
+    def get_expire(cls, otp: any) -> float:
+        return otp.interval - datetime.now().timestamp() % otp.interval
+        # return round(otp.interval - datetime.now().timestamp() % otp.interval)

@@ -7,15 +7,20 @@ import style_rc
 import lib.bridge.account_bridge
 # noinspection PyUnresolvedReferences
 import lib.bridge.backup_restore_bridge
+# noinspection PyUnresolvedReferences
+import lib.bridge.settings_bridge
+# noinspection PyUnresolvedReferences
+import lib.bridge.update_bridge
 
 from pathlib import Path
 
-from PySide6.QtGui import QGuiApplication
+from PySide6.QtGui import QGuiApplication, QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 
-from lib.model.account_list_model import AccountListModel
+from lib.connections.update_connection import UpdateConnection
+from lib.qt_model.account_list_model import AccountListModel
 from lib.secret.secret import Secret
-from lib.sqlite.sqlite_db import SqliteDB
+from lib.database.sqlite_db import SqliteDB
 
 
 class App:
@@ -24,11 +29,15 @@ class App:
     @classmethod
     def run(cls):
         app = QGuiApplication(sys.argv)
-        app.setApplicationName("OTP Fly")
+        app.setApplicationName("OTP FLY")
+        app.setWindowIcon(QIcon("otpfly.ico"))
         engine = QQmlApplicationEngine()
 
         SqliteDB().connect()
         Secret.get_fernet()
+
+        update_connection = UpdateConnection()
+        engine.rootContext().setContextProperty("updateConnection", update_connection)
 
         account_list_model = AccountListModel()
         engine.rootContext().setContextProperty("AccountListModel", account_list_model)

@@ -7,7 +7,7 @@ from PySide6.QtCore import QObject, QUrl, Slot
 from PySide6.QtQml import QmlElement
 
 from app import App
-from lib.sqlite.sqlite_db import SqliteDB
+from lib.database.sqlite_db import SqliteDB
 
 QML_IMPORT_NAME = "io.qt.textproperties"
 QML_IMPORT_MAJOR_VERSION = 1
@@ -29,3 +29,4 @@ class BackupRestoreBridge(QObject):
     def restore_file_signal(self, url):
         filename = url.toLocalFile()
         print(f"Restore File {filename}")
+        SqliteDB.fetch_backup_file(filename)

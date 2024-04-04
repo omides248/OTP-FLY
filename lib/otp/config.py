@@ -1,2 +1,2 @@
 class OTPConfig:
-    timeout = 10
+    timeout = 30

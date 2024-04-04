@@ -2,27 +2,27 @@ import typing
 from dataclasses import dataclass, fields
 from typing import Any, Self
 
-from PySide6.QtCore import QObject, QAbstractListModel, QModelIndex, Qt
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
 
+from lib.model.account_model import Account
 from lib.otp.otp import OTP
-from lib.sqlite.sqlite_db import SqliteDB
 
 
 @dataclass
-class Account:
+class AccountData:
     db_id: int = 0
     name: str = ""
     code: str = ""
-    expire: int = 0
+    expire: float = 0
     otp: int = 0
 
 
 class AccountListModel(QAbstractListModel):
     obj: Self = None
 
-    def __init__(self, parent=QObject | None) -> None:
+    def __init__(self) -> None:
         super().__init__()
-        self.list_model = []
+        self.list_model: [AccountData] = []
         self.set_obj(self)
         self.load_data()
 
@@ -38,7 +38,7 @@ class AccountListModel(QAbstractListModel):
 
     def roleNames(self) -> dict[int | Any, bytes]:
         d = {}
-        for i, field in enumerate(fields(Account)):
+        for i, field in enumerate(fields(AccountData)):
             d[Qt.DisplayRole + i] = field.name.encode()
         return d
 
@@ -46,7 +46,7 @@ class AccountListModel(QAbstractListModel):
         return len(self.list_model)
 
     def load_data(self):
-        res = SqliteDB.get_all()
+        res = Account.get_all()
         if res:
             for row in res:
                 otp, err = OTP.otp_verify(row.get("key"))
@@ -54,7 +54,11 @@ class AccountListModel(QAbstractListModel):
                     if res:
                         code = OTP.get_code(otp)
                         expire = OTP.get_expire(otp)
-                        account = Account(db_id=row.get("id"), name=row.get("name"), code=code, expire=expire, otp=otp)
+                        account = AccountData(db_id=row.get("id"),
+                                              name=row.get("name"),
+                                              code=code,
+                                              expire=expire,
+                                              otp=otp)
                         self.add(account)
 
     @classmethod
@@ -62,11 +66,15 @@ class AccountListModel(QAbstractListModel):
         cls.obj = self
 
     @classmethod
-    def get_account(cls, index) -> Account:
+    def get_account(cls, index) -> AccountData:
         return cls.obj.list_model[index]
 
     @classmethod
-    def add(cls, account: Account) -> bool:
+    def get_accounts_name(cls) -> list[AccountData.name]:
+        return [i.name for i in cls.obj.list_model]
+
+    @classmethod
+    def add(cls, account: AccountData) -> bool:
         cls.obj.beginInsertRows(QModelIndex(), cls.obj.rowCount(), cls.obj.rowCount())
         cls.obj.list_model.append(account)
         cls.obj.endInsertRows()

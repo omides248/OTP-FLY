@@ -1,7 +1,7 @@
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
-import QtQuick.Window
+import QtQuick 6.6
+import QtQuick.Controls 6.6
+import QtQuick.Layouts 6.6
+import QtQuick.Window 6.6
 
 Dialog {
     id: alarmDialog
@@ -72,7 +72,7 @@ Dialog {
             }
             model: [
                 {value: 0, text: qsTr("Timed based")},
-                {value: 1, text: qsTr("Counter based")}
+                // {value: 1, text: qsTr("Counter based")}
             ]
         }
     }

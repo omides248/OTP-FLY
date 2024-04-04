@@ -1,6 +1,6 @@
 [app]
 # title of your application
-title = pyside_app_demo
+title = OTPFLY
 # project directory. the general assumption is that project_dir is the parent directory
 # of input_file
 project_dir = .
@@ -15,7 +15,7 @@ icon = D:\w_omid_old\Projects\otp-fly\otpfly.ico
 
 [python]
 # python path
-python_path = C:\Users\omid.esmaeili\AppData\Local\Programs\Python\Python311\python.exe
+python_path = D:\w_omid_old\Projects\venv3.11\Scripts\python.exe
 # python packages to install
 # ordered-set = increase compile time performance of nuitka packaging
 # zstandard = provides final executable size optimization
@@ -28,7 +28,7 @@ android_packages = buildozer==1.5.0,cython==0.29.33
 # normally all the qml files required by the project are added automatically
 # excluded qml plugin binaries
 excluded_qml_plugins = QtCharts,QtQuick3D,QtSensors,QtTest,QtWebEngine
-qml_files = app.qml,view\AccountDelegate.qml,view\AddAccountDialog.qml,view\DeleteAccountDialog.qml,view\ProgressCircle.qml
+qml_files = app.qml,lib\view\AccountDelegate.qml,lib\view\AddAccountDialog.qml,lib\view\DeleteAccountDialog.qml,lib\view\ProgressCircle.qml,lib\view\menu_bar\MenuBar.qml,lib\view\menu_bar\MyToolBar.qml,test\downloader2\App.qml
 
 [android]
 # path to pyside wheel
@@ -41,8 +41,8 @@ qml_files = app.qml,view\AccountDelegate.qml,view\AddAccountDialog.qml,view\Dele
 [nuitka]
 # (str) specify any extra nuitka arguments
 # eg = extra_args = --show-modules --follow-stdlib
-extra_args = --quiet --noinclude-qt-translations
-#--include-data-files = view\*.qml
+extra_args = --quiet --noinclude-qt-translations --disable-console
+# --include-data-files = view\*.qml
 
 [buildozer]
 # build mode
